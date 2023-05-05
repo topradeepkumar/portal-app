@@ -1,4 +1,4 @@
-package com.projects.collab.PortalApp;
+package com.projects.collab;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

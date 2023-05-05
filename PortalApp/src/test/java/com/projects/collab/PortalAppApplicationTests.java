@@ -1,4 +1,4 @@
-package com.projects.collab.PortalApp;
+package com.projects.collab;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -8,6 +8,7 @@ class PortalAppApplicationTests {
 
 	@Test
 	void contextLoads() {
+
 	}
 
 }
