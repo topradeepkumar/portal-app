@@ -1,0 +1,11 @@
+{
+  "firstName": "Jane",
+  "lastName": "Daniels",
+  "aadhaar": "12345678",
+  "phoneNumber": "12345678",
+  "address": {
+    "addressLine1": "123 Main St",
+    "city":"Tirupati",
+    "postalcode":"94538"
+  }
+}

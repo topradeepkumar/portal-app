@@ -8,24 +8,27 @@ import lombok.Value;
 @AllArgsConstructor
 public class RegistrationUser {
 
-    @JsonProperty("admin_user_id")
+    @JsonProperty("adminUserId")
     private String adminUserId;
 
-    @JsonProperty("first_name")
+    @JsonProperty("firstName")
     private String firstname;
 
-    @JsonProperty("middle_name")
+    @JsonProperty("middleName")
     private String middlename;
 
-    @JsonProperty("last_name")
+    @JsonProperty("lastName")
     private String lastname;
 
     @JsonProperty("aadhaar")
     private String aadhaar;
 
-    @JsonProperty("phone_number")
+    @JsonProperty("phoneNumber")
     private String phonenumber;
 
     @JsonProperty("address")
     private Address address;
+
+    @JsonProperty("password")
+    private String password;
 }

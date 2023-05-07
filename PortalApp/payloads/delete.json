@@ -1,0 +1,12 @@
+{
+  "adminUserId": "4321",
+  "firstName": "John",
+  "lastName": "Smith",
+  "aadhaar": "1234",
+  "phoneNumber": "1234",
+  "address": {
+    "addressLine1": "123 Main St",
+    "city":"California",
+    "postalcode":"94538"
+  }
+}

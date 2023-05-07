@@ -9,19 +9,19 @@ import lombok.*;
 @Setter
 public class UserResponse {
 
-    @JsonProperty("first_name")
+    @JsonProperty("firstName")
     private String firstname;
 
-    @JsonProperty("middle_name")
+    @JsonProperty("middleName")
     private String middlename;
 
-    @JsonProperty("last_name")
+    @JsonProperty("lastName")
     private String lastname;
 
     @JsonProperty("aadhaar")
     private String aadhaar;
 
-    @JsonProperty("phone_number")
+    @JsonProperty("phoneNumber")
     private String phonenumber;
 
     @JsonProperty("address")

@@ -24,6 +24,30 @@ public class UpdateDetailsService {
                 if(portalUserAdmin.getAdmin()) {
                     PortalUser userEntity = DatabaseToReponseMapper.mapRegistrationUserToPortalUser(user);
                     repository.save(userEntity);
+                } else {
+                    result = false;
+                }
+            } else {
+                result = false;
+            }
+        } catch(Exception exception) {
+            exception.printStackTrace();
+            result = false;
+        }
+        return result;
+    }
+
+    public boolean deleteUserDetails(RegistrationUser user) {
+        boolean result = true;
+        try{
+            java.util.Optional<PortalUser> adminUser =  repository.findById(user.getAdminUserId());
+            if(adminUser.isPresent()) {
+                PortalUser portalUserAdmin = adminUser.get();
+                if(portalUserAdmin.getAdmin()) {
+                    PortalUser userEntity = DatabaseToReponseMapper.mapRegistrationUserToPortalUser(user);
+                    repository.deleteById(userEntity.getPhonenumber());
+                } else {
+                    result = false;
                 }
             } else {
                 result = false;

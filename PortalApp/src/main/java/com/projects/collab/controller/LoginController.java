@@ -1,9 +1,7 @@
 package com.projects.collab.controller;
 
-import com.fasterxml.jackson.databind.util.ArrayIterator;
 import com.projects.collab.entity.PortalUser;
 import com.projects.collab.mapper.DatabaseToReponseMapper;
-import com.projects.collab.pojo.Address;
 import com.projects.collab.pojo.RegistrationUser;
 import com.projects.collab.pojo.UserResponse;
 import com.projects.collab.service.LoginService;
@@ -27,10 +25,32 @@ public class LoginController {
     @Autowired
     private LoginService service;
 
-    @GetMapping(path="/v1/all")
+    @GetMapping(path="/v1/getAllUsers")
     public @ResponseBody ResponseEntity<Iterable<UserResponse>> fetchUsers () {
         ResponseEntity<Iterable<UserResponse>> response;
-        Iterable<PortalUser> result = service.findAll();
+        Iterable<PortalUser> result = service.findNonAdmins();
+        if (Objects.nonNull(result)) {
+            List<UserResponse> interimResponse = new ArrayList<>();
+            for (PortalUser portalUser : result) {
+                UserResponse userResponse =
+                        DatabaseToReponseMapper.mapToUserResponse(portalUser);
+                interimResponse.add(userResponse);
+            }
+            response = new ResponseEntity<>(
+                    interimResponse,
+                    HttpStatus.OK);
+        } else {
+            response = new ResponseEntity<>(
+                    null,
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return response;
+    }
+
+    @GetMapping(path="/v1/getAllAdminUsers")
+    public @ResponseBody ResponseEntity<Iterable<UserResponse>> fetchAdminUsers () {
+        ResponseEntity<Iterable<UserResponse>> response;
+        Iterable<PortalUser> result = service.findAllAdmins();
         if (Objects.nonNull(result)) {
             List<UserResponse> interimResponse = new ArrayList<>();
             for (PortalUser portalUser : result) {
@@ -54,11 +74,30 @@ public class LoginController {
         ResponseEntity<UserResponse> response;
         Optional<PortalUser> portalUser = service.findById(user.getPhonenumber());
         if(portalUser.isPresent()) {
-            UserResponse userResponse =
-                    DatabaseToReponseMapper.mapToUserResponse(portalUser.get());
-            response = new ResponseEntity<>(
-                    userResponse,
-                    HttpStatus.OK);
+            String password = user.getPassword();
+            if(password.length() == 8) {
+                PortalUser portalUserOptional = portalUser.get();
+                String phoneNumber = portalUserOptional.getPhonenumber();
+                String aadhaar = portalUserOptional.getAadhaar();
+                String generatedPassword = phoneNumber.substring(phoneNumber.length()-4, phoneNumber.length())
+                        + aadhaar.substring(aadhaar.length()-4, aadhaar.length());
+                System.out.println(generatedPassword);
+                if(password.equals(generatedPassword)) {
+                    UserResponse userResponse =
+                            DatabaseToReponseMapper.mapToUserResponse(portalUserOptional);
+                    response = new ResponseEntity<>(
+                            userResponse,
+                            HttpStatus.OK);
+                } else {
+                    response = new ResponseEntity<>(
+                            null,
+                            HttpStatus.NO_CONTENT);
+                }
+            } else {
+                response = new ResponseEntity<>(
+                        null,
+                        HttpStatus.NO_CONTENT);
+            }
         } else {
             response = new ResponseEntity<>(
                     null,

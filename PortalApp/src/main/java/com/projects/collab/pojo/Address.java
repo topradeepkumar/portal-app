@@ -9,10 +9,10 @@ import lombok.*;
 @Setter
 public class Address {
 
-    @JsonProperty("address_line1")
+    @JsonProperty("addressLine1")
     private String addressline1;
 
-    @JsonProperty("address_line2")
+    @JsonProperty("addressLine2")
     private String addressline2;
 
     @JsonProperty("village")
